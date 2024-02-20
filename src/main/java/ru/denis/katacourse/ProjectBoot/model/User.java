@@ -39,6 +39,7 @@ public class User implements UserDetails {
     @NotEmpty(message = "Email should not be empty")
     @Email(message = "Email should be valid")
     private String email;
+    @Setter
     @NotEmpty(message = "Password should not be empty")
     private String password;
     @ManyToMany
@@ -90,10 +91,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 

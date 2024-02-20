@@ -8,6 +8,7 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 import java.util.HashSet;
 import java.util.Set;
 
+
 public class DataInicializer {
     private final UserService userService;
     private final RoleService roleService;
