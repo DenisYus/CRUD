@@ -1,17 +1,14 @@
 package ru.denis.katacourse.ProjectBoot.service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.denis.katacourse.ProjectBoot.dao.UserDAO;
 import ru.denis.katacourse.ProjectBoot.model.User;
-
 
 import java.util.List;
 
@@ -65,17 +62,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         if (userDAO.findByUserEmail(email) == null)
             throw new UsernameNotFoundException("User not found");
 
         return userDAO.findByUserEmail(email);
 
     }
-
-
-
-
-
 
 
 }
