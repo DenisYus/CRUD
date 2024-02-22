@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.denis.katacourse.ProjectBoot.dto.AuthenticationRequest;
 import ru.denis.katacourse.ProjectBoot.dto.AuthenticationResponse;
-import ru.denis.katacourse.ProjectBoot.model.User;
+import ru.denis.katacourse.ProjectBoot.model.UserEntity;
 import ru.denis.katacourse.ProjectBoot.security.JwtService;
 import ru.denis.katacourse.ProjectBoot.service.UserService;
 
@@ -23,9 +23,9 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody User user) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserEntity user) {
         userService.saveUser(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(userService.loadUserByUsername(user.getEmail()));
         return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
     }
 

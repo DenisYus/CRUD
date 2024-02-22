@@ -2,37 +2,37 @@ package ru.denis.katacourse.ProjectBoot.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.denis.katacourse.ProjectBoot.dao.RoleDAO;
-import ru.denis.katacourse.ProjectBoot.model.Role;
+import ru.denis.katacourse.ProjectBoot.dao.RoleRepository;
+import ru.denis.katacourse.ProjectBoot.model.RoleEntity;
 
 import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-    private final RoleDAO roleDAO;
+    private final RoleRepository roleRepository;
 
-    public RoleServiceImpl(RoleDAO roleDAO) {
-        this.roleDAO = roleDAO;
+    public RoleServiceImpl(RoleRepository roleDAO) {
+        this.roleRepository = roleDAO;
     }
 
     @Override
-    public Role getRole(String userRole) {
-        return roleDAO.getRole(userRole);
+    public RoleEntity getRole(String userRole) {
+        return roleRepository.findByUserRole(userRole);
     }
 
     @Override
-    public Role getRoleById(Long id) {
-        return roleDAO.getRoleById(id);
+    public RoleEntity getRoleById(Integer id) {
+        return roleRepository.findById(id).get();
     }
 
     @Override
-    public List<Role> allRoles() {
-        return roleDAO.allRoles();
+    public List<RoleEntity> allRoles() {
+        return roleRepository.findAll();
     }
 
     @Override
     @Transactional
-    public void addRole(Role role) {
-        roleDAO.addRole(role);
+    public void addRole(RoleEntity role) {
+        roleRepository.save(role);
     }
 }

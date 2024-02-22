@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.denis.katacourse.ProjectBoot.model.User;
+import ru.denis.katacourse.ProjectBoot.mapers.UserMapper;
+import ru.denis.katacourse.ProjectBoot.model.UserEntity;
 import ru.denis.katacourse.ProjectBoot.service.UserService;
 
 import java.util.List;
@@ -20,18 +21,19 @@ public class UsersController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
 
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
-        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
+        UserDto userDto = UserMapper.INSTANCE.toDto(userService.getUserById(id));
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user, BindingResult bindingResult) throws Exception {
+    public ResponseEntity<UserEntity> createUser(@Valid @RequestBody UserEntity user, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -44,7 +46,7 @@ public class UsersController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable("id") int id, BindingResult bindingResult) throws Exception {
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user, @PathVariable("id") int id, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

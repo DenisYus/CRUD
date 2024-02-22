@@ -1,19 +1,17 @@
 package ru.denis.katacourse.ProjectBoot.service;
 
-import org.springframework.stereotype.Service;
-import ru.denis.katacourse.ProjectBoot.dao.RoleDAO;
-import ru.denis.katacourse.ProjectBoot.model.Role;
+import ru.denis.katacourse.ProjectBoot.model.RoleEntity;
 
 import java.util.List;
 
 public interface RoleService {
 
 
-    Role getRole(String userRole);
+    RoleEntity getRole(String userRole);
 
-    Role getRoleById(Long id);
+    RoleEntity getRoleById(Integer id);
 
-    List<Role> allRoles();
+    List<RoleEntity> allRoles();
 
-    void addRole(Role role);
+    void addRole(RoleEntity role);
 }

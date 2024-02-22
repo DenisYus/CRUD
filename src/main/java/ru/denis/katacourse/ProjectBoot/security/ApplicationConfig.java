@@ -9,12 +9,12 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.denis.katacourse.ProjectBoot.service.UserService;
+import ru.denis.katacourse.ProjectBoot.service.AuthenticationUserService;
 
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final UserService userService;
+    private final AuthenticationUserService userService;
 
 
     @Bean

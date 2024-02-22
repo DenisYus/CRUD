@@ -2,71 +2,74 @@ package ru.denis.katacourse.ProjectBoot.service;
 
 
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.denis.katacourse.ProjectBoot.dao.UserDAO;
-import ru.denis.katacourse.ProjectBoot.model.User;
+import ru.denis.katacourse.ProjectBoot.dao.UserRepository;
+import ru.denis.katacourse.ProjectBoot.model.UserEntity;
 
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserDAO userDAO;
+    private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
 
     @Lazy
-    public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
-    public void saveUser(User user) {
+    public void saveUser(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDAO.saveUser(user);
+        userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public void updateUser(User updateUser, int id) {
-        User user = getUserById(id);
+    public void updateUser(UserEntity updateUser, Integer id) {
+        UserEntity user = getUserById(id);
         if (!(user.getPassword()).equals(updateUser.getPassword())) {
             updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
 
         }
-        userDAO.updateUser(updateUser);
+        userRepository.save(updateUser);
     }
 
     @Override
     @Transactional
-    public void removeUserById(int id) {
-        userDAO.removeUserById(id);
+    public void removeUserById(Integer id) {
+        userRepository.deleteById(id);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+    public List<UserEntity> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public User getUserById(int id) {
-        return userDAO.getUserById(id);
+    public UserEntity getUserById(Integer id) {
+        return userRepository.findById(id).get();
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        if (userDAO.findByUserEmail(email) == null)
+        var user = userRepository.findByEmail(email);
+        if (user == null)
             throw new UsernameNotFoundException("User not found");
+        return new User(user.getEmail(), user.getPassword(), user.getRoles().stream()
+                .map(r -> new SimpleGrantedAuthority(r.getUserRole())).toList());
 
-        return userDAO.findByUserEmail(email);
 
     }
 

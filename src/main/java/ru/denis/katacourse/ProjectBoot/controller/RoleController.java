@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.denis.katacourse.ProjectBoot.model.Role;
+import ru.denis.katacourse.ProjectBoot.model.RoleEntity;
 import ru.denis.katacourse.ProjectBoot.service.RoleService;
 
 import java.util.List;
@@ -20,8 +20,8 @@ public class RoleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Role>> getAllRoles() {
-        List<Role> roleList = roleService.allRoles();
+    public ResponseEntity<List<RoleEntity>> getAllRoles() {
+        List<RoleEntity> roleList = roleService.allRoles();
         return new ResponseEntity<>(roleList.stream().toList(), HttpStatus.OK);
     }
 }
