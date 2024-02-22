@@ -1,5 +1,6 @@
 package ru.denis.katacourse.ProjectBoot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "role", unique = true)
     private String userRole;
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Set<User> user;
 
 

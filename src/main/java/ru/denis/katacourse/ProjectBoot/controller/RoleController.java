@@ -22,8 +22,6 @@ public class RoleController {
     @GetMapping
     public ResponseEntity<List<Role>> getAllRoles() {
         List<Role> roleList = roleService.allRoles();
-        return roleList != null && !roleList.isEmpty()
-                ? new ResponseEntity<>(roleList.stream().toList(), HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(roleList.stream().toList(), HttpStatus.OK);
     }
 }

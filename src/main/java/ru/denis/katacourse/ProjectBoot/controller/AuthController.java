@@ -2,13 +2,16 @@ package ru.denis.katacourse.ProjectBoot.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.denis.katacourse.ProjectBoot.dto.AuthenticationRequest;
 import ru.denis.katacourse.ProjectBoot.dto.AuthenticationResponse;
-import ru.denis.katacourse.ProjectBoot.dto.RegisterRequest;
+import ru.denis.katacourse.ProjectBoot.model.User;
+import ru.denis.katacourse.ProjectBoot.security.JwtService;
 import ru.denis.katacourse.ProjectBoot.service.UserService;
 
 @RestController
@@ -16,14 +19,26 @@ import ru.denis.katacourse.ProjectBoot.service.UserService;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        return null;
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody User user) {
+        userService.saveUser(user);
+        var jwtToken = jwtService.generateToken(user);
+        return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
     }
 
     @PostMapping("/authentication")
     public ResponseEntity<AuthenticationResponse> authentication(@RequestBody AuthenticationRequest request) {
-        return null;
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        var user = userService.loadUserByUsername(request.getEmail());
+        var jwtToken = jwtService.generateToken(user);
+        return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
     }
 }

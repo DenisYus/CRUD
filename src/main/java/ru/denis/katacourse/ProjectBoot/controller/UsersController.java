@@ -21,19 +21,13 @@ public class UsersController {
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
-        final List<User> user = userService.getAllUsers();
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
 
-        return user != null && !user.isEmpty()
-                ? new ResponseEntity<>(user, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
-        final User user = userService.getUserById(id);
-        return user != null
-                ? new ResponseEntity<>(user, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @PostMapping
