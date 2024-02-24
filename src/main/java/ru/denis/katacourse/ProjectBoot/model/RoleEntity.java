@@ -6,11 +6,11 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "roles")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "roles")
 @Builder(toBuilder = true)
 public class RoleEntity {
     @Id

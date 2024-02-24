@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.denis.katacourse.ProjectBoot.dto.AuthenticationRequest;
 import ru.denis.katacourse.ProjectBoot.dto.AuthenticationResponse;
+import ru.denis.katacourse.ProjectBoot.dto.UserDto;
 import ru.denis.katacourse.ProjectBoot.model.UserEntity;
 import ru.denis.katacourse.ProjectBoot.security.JwtService;
 import ru.denis.katacourse.ProjectBoot.service.UserService;
@@ -30,7 +30,7 @@ public class AuthController {
     }
 
     @PostMapping("/authentication")
-    public ResponseEntity<AuthenticationResponse> authentication(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authentication(@RequestBody UserDto request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

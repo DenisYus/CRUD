@@ -2,6 +2,7 @@ package ru.denis.katacourse.ProjectBoot.mapers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import ru.denis.katacourse.ProjectBoot.dto.UserDto;
 import ru.denis.katacourse.ProjectBoot.model.UserEntity;
 
 @Mapper

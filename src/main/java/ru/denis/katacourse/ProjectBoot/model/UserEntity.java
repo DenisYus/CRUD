@@ -14,11 +14,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "users")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
 @Builder(toBuilder = true)
 public class UserEntity {
     @Id
@@ -35,7 +35,7 @@ public class UserEntity {
     @NotEmpty(message = "Email should not be empty")
     @Email(message = "Email should be valid")
     private String email;
-    @Setter
+
     @NotEmpty(message = "Password should not be empty")
     private String password;
     @ManyToMany

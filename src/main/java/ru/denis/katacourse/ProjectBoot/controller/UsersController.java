@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.denis.katacourse.ProjectBoot.dto.UserDto;
 import ru.denis.katacourse.ProjectBoot.mapers.UserMapper;
 import ru.denis.katacourse.ProjectBoot.model.UserEntity;
 import ru.denis.katacourse.ProjectBoot.service.UserService;
