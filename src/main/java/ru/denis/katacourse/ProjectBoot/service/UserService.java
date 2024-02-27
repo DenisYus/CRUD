@@ -1,7 +1,6 @@
 package ru.denis.katacourse.ProjectBoot.service;
 
 
-import org.springframework.security.core.userdetails.UserDetails;
 import ru.denis.katacourse.ProjectBoot.model.UserEntity;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public interface UserService {
 
     UserEntity getUserById(Integer id);
 
-    UserDetails loadUserByUsername(String email);
+    UserEntity loadUserByUsername(String email);
 
 
 }

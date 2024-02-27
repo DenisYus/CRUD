@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    private String role;
+public class FullUserDto {
+    private Set<RoleDto> roles;
     private String password;
     private String email;
     private String name;

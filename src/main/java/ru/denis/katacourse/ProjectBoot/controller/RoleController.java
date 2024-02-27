@@ -2,10 +2,12 @@ package ru.denis.katacourse.ProjectBoot.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.denis.katacourse.ProjectBoot.model.RoleEntity;
+import ru.denis.katacourse.ProjectBoot.dto.RoleDto;
+import ru.denis.katacourse.ProjectBoot.mapers.RoleMapper;
 import ru.denis.katacourse.ProjectBoot.service.RoleService;
 
 import java.util.List;
@@ -20,8 +22,9 @@ public class RoleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RoleEntity>> getAllRoles() {
-        List<RoleEntity> roleList = roleService.allRoles();
-        return new ResponseEntity<>(roleList.stream().toList(), HttpStatus.OK);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<RoleDto>> getAllRoles() {
+        List<RoleDto> roleDto = RoleMapper.INSTANCE.toDto(roleService.allRoles());
+        return new ResponseEntity<>(roleDto, HttpStatus.OK);
     }
 }
