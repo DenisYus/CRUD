@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FullUserDto {
+    private Integer id;
     private Set<RoleDto> roles;
     private String password;
     private String email;
